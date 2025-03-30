@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>BuyLevelPlugin</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CounterStrikeSharp.API" Version="1.0.314" />
+    <Reference Include="GunGameAPI">
+        <HintPath>lib\GunGameAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="GG2">
+        <HintPath>lib\GG2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
