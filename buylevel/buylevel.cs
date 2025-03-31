@@ -29,6 +29,10 @@ namespace buylevel
                 return;
             }
 
+            Logger.LogInformation($"[BuyLevelPlugin] GunGame API loaded. Type: {ggApi.GetType().FullName}");
+            var methods = ggApi.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            Logger.LogInformation($"[BuyLevelPlugin] Available API methods: {string.Join(", ", methods.Select(m => m.Name))}");
+            
             AddCommand("css_buylevel", "Buy a level in GunGame", OnBuyLevelCommand);
             Logger.LogInformation("[BuyLevelPlugin] Loaded successfully.");
         }
@@ -70,7 +74,7 @@ namespace buylevel
                 var ggPluginInstance = ggApi;
 
                 // Access playerManager
-                var playerManagerField = ggPluginType.GetField("playerManager", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic)
+                var playerManagerField = ggPluginType.GetField("playerManager", BindingFlags.Public | BindingFlags.Instance)
                     ?? throw new Exception("'playerManager' field not found");
                 var playerManager = playerManagerField.GetValue(ggPluginInstance);
                 if (playerManager == null)
