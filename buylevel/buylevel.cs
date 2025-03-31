@@ -25,7 +25,7 @@ namespace buylevel
             ggApi = APICapability.Get();
             if (ggApi == null)
             {
-                Logger.LogInformation("[BuyLevelPlugin] Error: GunGame API not found! Ensure GunGame plugin is loaded.");
+                Logger.LogError("[BuyLevelPlugin] Error: GunGame API not found! Ensure GunGame plugin is loaded.");
                 return;
             }
 
@@ -37,14 +37,14 @@ namespace buylevel
         {
             if (player == null || !player.IsValid || !player.PawnIsAlive)
             {
-                Logger.LogInformation("[BuyLevelPlugin] Invalid or dead player attempted to use !buylevel.");
+                Logger.LogWarning("[BuyLevelPlugin] Invalid or dead player attempted to use !buylevel.");
                 return;
             }
 
             if (ggApi == null)
             {
                 player.PrintToChat("Error: GunGame API is not available.");
-                Logger.LogInformation("[BuyLevelPlugin] Error: ggApi is null in OnBuyLevelCommand.");
+                Logger.LogError("[BuyLevelPlugin] Error: ggApi is null in OnBuyLevelCommand.");
                 return;
             }
 
@@ -76,7 +76,7 @@ namespace buylevel
                 if (playerManager == null)
                 {
                     player.PrintToChat("Error: GunGame player manager not initialized.");
-                    Logger.LogInformation("[BuyLevelPlugin] Error: playerManager is null.");
+                    Logger.LogError("[BuyLevelPlugin] Error: playerManager is null.");
                     return;
                 }
 
@@ -87,21 +87,21 @@ namespace buylevel
                 if (playerMapObj == null)
                 {
                     player.PrintToChat("Error: Player map data not initialized.");
-                    Logger.LogInformation("[BuyLevelPlugin] Error: playerMap is null.");
+                    Logger.LogError("[BuyLevelPlugin] Error: playerMap is null.");
                     return;
                 }
                 var playerMap = (System.Collections.IDictionary)playerMapObj;
                 if (!playerMap.Contains(slot))
                 {
                     player.PrintToChat("Error: Player data not found.");
-                    Logger.LogInformation($"[BuyLevelPlugin] Error: No player data for slot {slot}.");
+                    Logger.LogError($"[BuyLevelPlugin] Error: No player data for slot {slot}.");
                     return;
                 }
                 var playerData = playerMap[slot];
                 if (playerData == null)
                 {
                     player.PrintToChat("Error: Player data is null.");
-                    Logger.LogInformation($"[BuyLevelPlugin] Error: playerData for slot {slot} is null.");
+                    Logger.LogError($"[BuyLevelPlugin] Error: playerData for slot {slot} is null.");
                     return;
                 }
 
@@ -114,7 +114,7 @@ namespace buylevel
                 if (ggVariables == null)
                 {
                     player.PrintToChat("Error: GunGame variables not initialized.");
-                    Logger.LogInformation("[BuyLevelPlugin] Error: GGVariables.Instance is null.");
+                    Logger.LogError("[BuyLevelPlugin] Error: GGVariables.Instance is null.");
                     return;
                 }
                 var weaponsListField = ggVariablesType.GetField("weaponsList", BindingFlags.Public | BindingFlags.Instance)
@@ -123,7 +123,7 @@ namespace buylevel
                 if (weaponsListObj == null)
                 {
                     player.PrintToChat("Error: Weapons list not initialized.");
-                    Logger.LogInformation("[BuyLevelPlugin] Error: weaponsList is null.");
+                    Logger.LogError("[BuyLevelPlugin] Error: weaponsList is null.");
                     return;
                 }
                 var weaponsList = (System.Collections.IList)weaponsListObj;
@@ -133,7 +133,7 @@ namespace buylevel
                 if (currentWeaponObj == null)
                 {
                     player.PrintToChat("Error: Current weapon data is missing.");
-                    Logger.LogInformation($"[BuyLevelPlugin] Error: Weapon at level {currentLevel} is null.");
+                    Logger.LogError($"[BuyLevelPlugin] Error: Weapon at level {currentLevel} is null.");
                     return;
                 }
                 var weaponNameField = currentWeaponObj.GetType().GetField("Name", BindingFlags.Public | BindingFlags.Instance)
@@ -142,7 +142,7 @@ namespace buylevel
                 if (currentWeaponObjName == null)
                 {
                     player.PrintToChat("Error: Current weapon name is missing.");
-                    Logger.LogInformation($"[BuyLevelPlugin] Error: Weapon name at level {currentLevel} is null.");
+                    Logger.LogError($"[BuyLevelPlugin] Error: Weapon name at level {currentLevel} is null.");
                     return;
                 }
                 string currentWeapon = (string)currentWeaponObjName;
@@ -161,7 +161,7 @@ namespace buylevel
                 if (pointsObj == null)
                 {
                     player.PrintToChat("Error: Player kill data is missing.");
-                    Logger.LogInformation($"[BuyLevelPlugin] Error: CurrentKillsPerWeap for slot {slot} is null.");
+                    Logger.LogError($"[BuyLevelPlugin] Error: CurrentKillsPerWeap for slot {slot} is null.");
                     return;
                 }
                 int points = (int)pointsObj;
@@ -186,14 +186,14 @@ namespace buylevel
                 if (newWeaponObj == null)
                 {
                     player.PrintToChat("Error: New weapon data is missing.");
-                    Logger.LogInformation($"[BuyLevelPlugin] Error: Weapon at level {currentLevel + 1} is null.");
+                    Logger.LogError($"[BuyLevelPlugin] Error: Weapon at level {currentLevel + 1} is null.");
                     return;
                 }
                 var newWeaponObjName = weaponNameField.GetValue(newWeaponObj);
                 if (newWeaponObjName == null)
                 {
                     player.PrintToChat("Error: New weapon name is missing.");
-                    Logger.LogInformation($"[BuyLevelPlugin] Error: Weapon name at level {currentLevel + 1} is null.");
+                    Logger.LogError($"[BuyLevelPlugin] Error: Weapon name at level {currentLevel + 1} is null.");
                     return;
                 }
                 string newWeapon = (string)newWeaponObjName;
@@ -216,7 +216,7 @@ namespace buylevel
             catch (Exception ex)
             {
                 player.PrintToChat("An error occurred while buying a level.");
-                Logger.LogInformation($"[BuyLevelPlugin] Exception: {ex.Message}\nStack Trace: {ex.StackTrace}");
+                Logger.LogError($"[BuyLevelPlugin] Exception: {ex.Message}\nStack Trace: {ex.StackTrace}");
             }
         }
     }
