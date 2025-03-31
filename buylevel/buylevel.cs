@@ -70,7 +70,7 @@ namespace buylevel
                 var ggPluginInstance = ggApi;
 
                 // Access playerManager
-                var playerManagerField = ggPluginType.GetField("playerManager", BindingFlags.Public | BindingFlags.Instance)
+                var playerManagerField = ggPluginType.GetField("playerManager", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic)
                     ?? throw new Exception("'playerManager' field not found");
                 var playerManager = playerManagerField.GetValue(ggPluginInstance);
                 if (playerManager == null)
